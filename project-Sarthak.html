@@ -53,7 +53,7 @@ h4::before, h4::after {
         }
     </style>
 </head>
-<body class="pt-5">
+<body class="pt-5	">
 <div class="bundle-container" >
     <h4 class="text-center">Bundle & Save</h4>
     
@@ -114,15 +114,16 @@ h4::before, h4::after {
         div.querySelector('.options').style.display = 'none';
     });
 
-    const selectedDiv = document.getElementById(bundle${id});
+    const selectedDiv = document.getElementById(`bundle${id}`);
     selectedDiv.classList.add('selected');
     const optionsDiv = selectedDiv.querySelector('.options');
-    optionsDiv.innerHTML = generateOptions(2); 
+    optionsDiv.innerHTML = generateOptions(2);  // Always 2, ignoring passed quantity
     optionsDiv.style.display = 'block';
 
-    document.getElementById('totalPrice').innerText = Total: DKK ${price}.00;
+    document.getElementById('totalPrice').innerText = `Total: DKK ${price}.00`;
 
-      selectedBundle.selections = new Array(2).fill({ size: 'S', color: 'Red' });
+    // Store selections for tracking user choices (always 2)
+    selectedBundle.selections = new Array(2).fill({ size: 'S', color: 'Red' });
     setupDropdownListeners();
 }
 
@@ -151,10 +152,10 @@ h4::before, h4::after {
     }
 
     function addToCart() {
-        alert(You have added ${selectedBundle.id} Pair(s) to the cart. Total: DKK ${selectedBundle.price}.00);
+        alert(`You have added ${selectedBundle.id} Pair(s) to the cart. Total: DKK ${selectedBundle.price}.00`);
     }
     // function addToCart() {
-    //     alert(You have added ${selectedBundle.quantity} Pair(s) to the cart.\nTotal: DKK ${selectedBundle.price}.00\nSelections: ${JSON.stringify(selectedBundle.selections)});
+    //     alert(`You have added ${selectedBundle.quantity} Pair(s) to the cart.\nTotal: DKK ${selectedBundle.price}.00\nSelections: ${JSON.stringify(selectedBundle.selections)}`);
     // }
 </script>
 </body>
