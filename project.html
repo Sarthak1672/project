@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bundle & Save</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        h4 {
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+h4::before, h4::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ccc;
+  margin: 0 10px;
+}
+
+        .bundle-container { max-width: 400px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .bundle { cursor: pointer; padding: 15px; border: 2px solid #ddd; border-radius: 8px; margin: 10px 0; transition: all 0.3s ease-in-out; }
+        .selected { border-color: #28a745; background-color: #e6f7e6; }
+        .bundle input[type="radio"] { display: none; }
+        .bundle .content { display: flex; justify-content: space-between; align-items: center; }
+        .bundle .details { flex-grow: 1; }
+        .bundle .discount { font-size: 0.9em; color: #28a745; }
+        .add-to-cart { width: 100%; background: #28a745; color: white; border: none; padding: 10px; border-radius: 5px; font-size: 1.2em; margin-top: 10px; cursor: pointer; }
+        .options { display: none; margin-top: 10px; }
+        .total-price { text-align: center; font-weight: bold; margin-top: 10px; font-size: 1.2em; }
+        .popular {
+            position: absolute;
+            top: 247px;
+            right: 247px;
+            background-color: #83cdff;
+            color: white;
+            padding: 3px 10px;
+            font-size: 12px;
+            border-radius: 5px;
+        }
+        .discount,.most-popular {
+            background-color: #83cdff;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 5px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body class="pt-5">
+<div class="bundle-container" >
+    <h4 class="text-center">Bundle & Save</h4>
+    
+    <div id="bundle1" class="bundle" onclick="selectBundle(1, 195, 2)">
+        <div class="content">
+            <input type="radio" name="bundle">
+            <div class="details">
+                <strong>1 Pair</strong><br>
+                DKK 195.00 <span class="discount">50% OFF</span>
+            </div>
+        </div>
+        <div class="options"></div>
+    </div>
+    
+    <div id="bundle2" class="bundle selected" onclick="selectBundle(2, 345, 2)">
+        <div class="content">
+            <input type="radio" name="bundle" checked>
+            <div class="details">
+                <strong>2 Pair</strong><br>
+                DKK 345.00 <span class="discount">40% OFF</span>
+                <!-- <span class="popular ">MOST POPULAR</span> -->
+                
+            </div>
+        </div>
+        <div class="options"></div>
+    </div>
+    
+    <div id="bundle3" class="bundle" onclick="selectBundle(3, 520, 2)">
+        <div class="content">
+            <input type="radio" name="bundle">
+            <div class="details">
+                <strong>3 Pair</strong><br>
+                DKK 520.00 <span class="discount">60% OFF</span>
+            </div>
+        </div>
+        <div class="options"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+        <pre>Free 2 days shipping</pre>
+        <p  id="totalPrice">Total: DKK 345.00</p>
+    </div>
+   
+    <div style="text-align: center; width: 100%;">
+
+    <button class="add-to-cart" onclick="addToCart()">+ Add to Cart</button>
+    <p>@all copyrights are reseved</p>
+    </div>
+</div>
+
+<script>
+    let selectedBundle = { id: 2, price: 345, quantity: 2 };
+    function selectBundle(id, price, quantity = 2) {
+    selectedBundle = { id, price, quantity, selections: [] };
+
+    document.querySelectorAll('.bundle').forEach(div => {
+        div.classList.remove('selected');
+        div.querySelector('.options').innerHTML = '';
+        div.querySelector('.options').style.display = 'none';
+    });
+
+    const selectedDiv = document.getElementById(bundle${id});
+    selectedDiv.classList.add('selected');
+    const optionsDiv = selectedDiv.querySelector('.options');
+    optionsDiv.innerHTML = generateOptions(2); 
+    optionsDiv.style.display = 'block';
+
+    document.getElementById('totalPrice').innerText = Total: DKK ${price}.00;
+
+      selectedBundle.selections = new Array(2).fill({ size: 'S', color: 'Red' });
+    setupDropdownListeners();
+}
+
+
+    function generateOptions(quantity) {
+        let optionsHTML = '';
+        for (let i = 1; i <= quantity; i++) {
+            optionsHTML += `
+                <div class="mt-2">
+                    <label>#${i} Size: 
+                        <select class="form-select d-inline w-auto"> 
+                            <option>S</option> 
+                            <option>M</option> 
+                        </select>
+                    </label>
+                    <label>Color: 
+                        <select class="form-select d-inline w-auto"> 
+                            <option>Red</option> 
+                            <option>Blue</option> 
+                        </select>
+                    </label>
+                </div>
+            `;
+        }
+        return optionsHTML;
+    }
+
+    function addToCart() {
+        alert(You have added ${selectedBundle.id} Pair(s) to the cart. Total: DKK ${selectedBundle.price}.00);
+    }
+    // function addToCart() {
+    //     alert(You have added ${selectedBundle.quantity} Pair(s) to the cart.\nTotal: DKK ${selectedBundle.price}.00\nSelections: ${JSON.stringify(selectedBundle.selections)});
+    // }
+</script>
+</body>
+</html>
